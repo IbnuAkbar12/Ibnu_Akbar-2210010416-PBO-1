@@ -5,6 +5,7 @@
 package sisteminformasipariwisatapantai;
 
 import dinas.wisata;
+import gui.Mainframe;
 import java.util.Scanner;
 import CRUD.Koneksi;
 
@@ -18,9 +19,10 @@ public class Sisteminformasipariwisatapantai {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        new Mainframe().setVisible(true);
         
-        Koneksi crud = new Koneksi();
+        //Koneksi crud = new Koneksi();
         
-        crud.hapuswisata(1);
+        //crud.hapuswisata(1);
     }
 }

@@ -6,6 +6,8 @@ package CRUD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -32,7 +34,7 @@ public class Koneksi {
         }
         
     }
-    //data user
+    //tabel user
     public void simpanUser(String tempid_user, String tempuser_name, String temppassword, String tempnama_lengkap, String tempJK, String tempalamat, String tempno_tlpn, String temptgl_lahir){
         
         try {
@@ -94,14 +96,29 @@ public class Koneksi {
         }
         
     }
+     
+    public ResultSet caridatauser(String id_user) {
+        ResultSet rs = null;
+        //cari data
+        try {
+            String query = "SELECT * FROM user WHERE id_user = ?";
+            PreparedStatement ps = Koneksidb.prepareStatement(query);
+            ps.setString(1, id_user);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return rs;
+    }
+    
     //tabel profil
-    public void simpanprofil(int tempid_menu, String tempnama_menu, String templink, String tempicon, String tempstatus){
+    public void simpanprofil(String tempid_menu, String tempnama_menu, String templink, String tempicon, String tempstatus){
         
         try {
             //menyimpan data
             String sql = "insert into profil (id_menu, nama_menu, link, icon, status) value (?,?,?,?,?)";
             PreparedStatement perintah = Koneksidb.prepareStatement(sql);
-            perintah.setInt(1, tempid_menu);
+            perintah.setString(1, tempid_menu);
             perintah.setString(2, tempnama_menu);
             perintah.setString(3, templink);
             perintah.setString(4, tempicon);
@@ -115,7 +132,7 @@ public class Koneksi {
         
     }
     
-    public void ubahprofil(int tempid_menu, String tempnama_menu, String templink, String tempicon, String tempstatus){
+    public void ubahprofil(String tempid_menu, String tempnama_menu, String templink, String tempicon, String tempstatus){
         
         try {
             //ubah data
@@ -125,7 +142,7 @@ public class Koneksi {
             perintah.setString(2, templink);
             perintah.setString(3, tempicon);
             perintah.setString(4, tempstatus);
-            perintah.setInt(5, tempid_menu);
+            perintah.setString(5, tempid_menu);
             perintah.executeUpdate();
             System.out.println("Data berhasil diubah");
             
@@ -135,13 +152,13 @@ public class Koneksi {
         
     }
     
-    public void hapusprofil(int tempid_menu){
+    public void hapusprofil(String tempid_menu){
         
         try {
             //hapus data
             String sql = "delete from profil where id_menu = ?";
             PreparedStatement perintah = Koneksidb.prepareStatement(sql);
-            perintah.setInt(1, tempid_menu);
+            perintah.setString(1, tempid_menu);
             perintah.executeUpdate();
             System.out.println("Data berhasil dihapus");
             
@@ -150,6 +167,21 @@ public class Koneksi {
         }
         
     }
+    
+        public ResultSet caridataprofil(String id_menu) {
+        ResultSet rs = null;
+        //cari data
+        try {
+            String query = "SELECT * FROM profil WHERE id_menu = ?";
+            PreparedStatement ps = Koneksidb.prepareStatement(query);
+            ps.setString(1, id_menu);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return rs;
+    }
+    
     //tabel menu
     public void simpanmenu(String tempisi, String tempfoto){
         
@@ -200,14 +232,29 @@ public class Koneksi {
         }
         
     }
+    
+        public ResultSet caridatamenu(String isi) {
+        ResultSet rs = null;
+        //cari data
+        try {
+            String query = "SELECT * FROM menu WHERE isi = ?";
+            PreparedStatement ps = Koneksidb.prepareStatement(query);
+            ps.setString(1, isi);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return rs;
+    }
+    
     //tabel wisata
-    public void simpanwisata(int tempid_wisata, String tempnama_objek, String tempjumlah_pengunjung, String templayanan, String tempid_lokasi, String tempfoto){
+    public void simpanwisata(String tempid_wisata, String tempnama_objek, String tempjumlah_pengunjung, String templayanan, String tempid_lokasi, String tempfoto){
         
         try {
             //menyimpan data
             String sql = "insert into wisata (id_wisata, nama_objek, jumlah_pengunjung, layanan, id_lokasi, foto) value (?,?,?,?,?,?)";
             PreparedStatement perintah = Koneksidb.prepareStatement(sql);
-            perintah.setInt(1, tempid_wisata);
+            perintah.setString(1, tempid_wisata);
             perintah.setString(2, tempnama_objek);
             perintah.setString(3, tempjumlah_pengunjung);
             perintah.setString(4, templayanan);
@@ -222,7 +269,7 @@ public class Koneksi {
         
     }
     
-    public void ubahwisata(int tempid_wisata, String tempnama_objek, String tempjumlah_pengunjung, String templayanan, String tempid_lokasi, String tempfoto){
+    public void ubahwisata(String tempid_wisata, String tempnama_objek, String tempjumlah_pengunjung, String templayanan, String tempid_lokasi, String tempfoto){
         
         try {
             //ubah data
@@ -233,7 +280,7 @@ public class Koneksi {
             perintah.setString(3, templayanan);
             perintah.setString(4, tempid_lokasi);
             perintah.setString(5, tempfoto);
-            perintah.setInt(6, tempid_wisata);
+            perintah.setString(6, tempid_wisata);
             perintah.executeUpdate();
             System.out.println("Data berhasil diubah");
             
@@ -243,13 +290,13 @@ public class Koneksi {
         
     }
     
-    public void hapuswisata(int tempid_wisata){
+    public void hapuswisata(String tempid_wisata){
         
         try {
             //hapus data
             String sql = "delete from wisata where id_wisata = ?";
             PreparedStatement perintah = Koneksidb.prepareStatement(sql);
-            perintah.setInt(1, tempid_wisata);
+            perintah.setString(1, tempid_wisata);
             perintah.executeUpdate();
             System.out.println("Data berhasil dihapus");
             
@@ -258,6 +305,21 @@ public class Koneksi {
         }
         
     }
+    
+    public ResultSet caridatawisata(String id_wisata) {
+        ResultSet rs = null;
+        //cari data
+        try {
+            String query = "SELECT * FROM wisata WHERE id_wisata = ?";
+            PreparedStatement ps = Koneksidb.prepareStatement(query);
+            ps.setString(1, id_wisata);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return rs;
+    }
+    
     
     
     
